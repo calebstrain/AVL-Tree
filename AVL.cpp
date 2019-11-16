@@ -53,7 +53,7 @@ AVLTree<T>::Node* AVLTree<T>::rotateRight(Node* node)
 }
 
 template<class T>
-AVLTree<T>::Node* AVLTree:<T>:rotateLeft(Node* node)
+AVLTree<T>::Node* AVLTree<T>::rotateLeft(Node* node)
 {
 	rotationCount++;
 	Node* right = node->right;
@@ -69,7 +69,7 @@ AVLTree<T>::Node* AVLTree:<T>:rotateLeft(Node* node)
 }
 
 template<class T>
-AVLTree<T>::Node* AVLTree::insert(Node* node, const T& item)
+AVLTree<T>::Node* AVLTree<T>::insert(Node* node, const T& item)
 {
 	if (node == NULL)
 		return new Node(item);
@@ -111,7 +111,7 @@ AVLTree<T>::~AVLTree()
 }
 
 template<class T>
-void AVLTree<T>::insert(const T item)
+void AVLTree<T>::insert(const T& item)
 {
 	root = insert(root, item);
 }
