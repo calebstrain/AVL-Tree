@@ -1,38 +1,35 @@
 #ifndef __AVLTREE_H__
 #define __AVLTREE_H__
 
-#include <string>
-#include <string.h>
-
 using namespace std;
 
+template<class T>
 class AVLTree
 {
 private:
 	class Node
 	{
 	public:
-		string word;
+		T item;
 		unsigned long height;
 		Node* left;
 		Node* right;
-		Node(const string& word);
+		Node(const T& item);
 		void setHeight();
 	};
 
 	void del(const Node* root);
-	void print(ostream& out, const Node* root) const;
+	void print(const Node* root) const;
 	Node* rotateRight(Node* node);
 	Node* rotateLeft(Node* node);
-	Node* insert(Node* node, const string& word);
+	Node* insert(Node* node, const T& item);
 	int rotationCount = 0;
 	Node* root;
 public:
 	AVLTree();
 	~AVLTree();
-	void insert(const string& word);
+	void insert(const T& item);
 	void print() const;
-	void print(ostream & ofs);
 	int getRotationCount();
 };
 
