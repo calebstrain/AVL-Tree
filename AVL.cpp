@@ -3,33 +3,41 @@
 #include "AVL.h"
 #include <string>
 
-AVLTree::Node::Node(const string& word)
+template<class T>
+AVLTree<T>::Node::Node(const T& item)
 {
-	this->word = word;
+	this->T = T;
 	height = 1;
 	left = NULL;
 	right = NULL;
 }
-void AVLTree::Node::setHeight()
+
+template<class T>
+void AVLTree<T>::Node::setHeight()
 {
 	height = max((left == NULL) ? (0) : (left->height), (right == NULL) ? (0) : (right->height)) + 1;
 }
 
-void AVLTree::del(const Node* root)
+template<class T>
+void AVLTree<T>::del(const Node* root)
 {
 	if (root == NULL) return;
 	del(root->left);
 	del(root->right);
 	delete root;
 }
-void AVLTree::print(ostream& ofs, const Node* root) const
+
+template<class T>
+void AVLTree<T>::print(const Node* root) const
 {
 	if (root == NULL) return;
-	print(ofs, root->left);
-	ofs << root->word; ofs << endl;
-	print(ofs, root->right);
+	print(root->left);
+	ocout << root->word << endl;
+	print(root->right);
 }
-AVLTree::Node* AVLTree::rotateRight(Node* node)
+
+template<class T>
+AVLTree<T>::Node* AVLTree<T>::rotateRight(Node* node)
 {
 	rotationCount++;
 	Node* left = node->left;
@@ -43,7 +51,9 @@ AVLTree::Node* AVLTree::rotateRight(Node* node)
 
 	return left;
 }
-AVLTree::Node* AVLTree::rotateLeft(Node* node)
+
+template<class T>
+AVLTree<T>::Node* AVLTree:<T>:rotateLeft(Node* node)
 {
 	rotationCount++;
 	Node* right = node->right;
@@ -57,17 +67,17 @@ AVLTree::Node* AVLTree::rotateLeft(Node* node)
 
 	return right;
 }
-AVLTree::Node* AVLTree::insert(Node* node, const string& word)
-{
-	// insert the new node
 
+template<class T>
+AVLTree<T>::Node* AVLTree::insert(Node* node, const T& item)
+{
 	if (node == NULL)
-		return new Node(word);
-	if (word == node->word) {}
-	if (word < node->word)
-		node->left = insert(node->left, word);
-	else if (word > node->word)
-		node->right = insert(node->right, word);
+		return new Node(item);
+	if (word == node->item) {}
+	if (word < node->item)
+		node->left = insert(node->left, item);
+	else if (item > node->item)
+		node->right = insert(node->right, item);
 
 	// rebalance if necessary
 
@@ -77,38 +87,43 @@ AVLTree::Node* AVLTree::insert(Node* node, const string& word)
 		return node;
 	if (balance > 1)
 	{
-		if (word <= node->left->word)
+		if (word <= node->left->item)
 			return rotateRight(node);
 		node->left = rotateLeft(node->left);
 		return rotateRight(node);
 	}
-	if (word > node->right->word)
+	if (word > node->right->item)
 		return rotateLeft(node);
 	node->right = rotateRight(node->right);
 	return rotateLeft(node);
 }
 
-AVLTree::AVLTree()
+template<class T>
+AVLTree<T>::AVLTree()
 {
 	root = NULL;
 }
-AVLTree::~AVLTree()
+
+template<class T>
+AVLTree<T>::~AVLTree()
 {
 	del(root);
 }
-void AVLTree::insert(const string& word)
+
+template<class T>
+void AVLTree<T>::insert(const T item)
 {
-	root = insert(root, word);
+	root = insert(root, item);
 }
-void AVLTree::print() const
+
+template<class T>
+void AVLTree<T>::print() const
 {
-	//print(root);
+	print(root);
 }
-void AVLTree::print(ostream& ofs)
-{
-	print(ofs, root);
-}
-int AVLTree::getRotationCount()
+
+template<class T>
+int AVLTree<T>::getRotationCount()
 {
 	return rotationCount;
 }
